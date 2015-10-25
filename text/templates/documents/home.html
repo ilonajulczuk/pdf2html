@@ -1,0 +1,20 @@
+{% extends "documents/base.html" %}
+
+{% block content %}
+        {% if request.user.is_authenticated %}
+        <div class="recent-docs">
+            <h2>Recent docs</h2>
+            <ul>
+            {% for doc in docs %}
+            <li><a href="{% url 'display' doc.id %}">{{ doc.title }}</a> </li>
+            {% empty %}
+            You don't have any docs yet!
+            {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        {% endif %}
+
+        <button><a href="{% url "document-list" %}">Upload</a></button>
+
+{% endblock content %}

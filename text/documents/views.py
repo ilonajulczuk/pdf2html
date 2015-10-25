@@ -8,14 +8,6 @@ from documents.serializers import UserSerializer, DocumentSerializer
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
-
-
 class DocumentViewSet(viewsets.ModelViewSet):
     """
     """
@@ -32,11 +24,26 @@ class DocumentViewSet(viewsets.ModelViewSet):
         return Document.objects.filter(owner=user)
 
 
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    """
+    queryset = User.objects
+
+
 @api_view()
 @permission_classes([permissions.IsAuthenticated])
 def display(request, num):
     doc = Document.objects.get(pk=num)
     if doc.html:
-        return HttpResponse(doc.html, status=200)
+        context = {"generated_html": doc.html}
+        return render(request, 'documents/display.html', context)
     else:
         return HttpResponse(status=404)
+
+
+def home(request):
+    context = {}
+    if request.user.is_authenticated():
+        docs = Document.objects.order_by('-id').filter(owner=request.user)
+        context["docs"] = docs[:10]
+    return render(request, 'documents/home.html', context)

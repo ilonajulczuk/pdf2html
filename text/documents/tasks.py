@@ -46,10 +46,8 @@ def convert_to_html(document_pk):
                 image.img.save(img_path, File(f))
             # Change link in the original html.
             to_replace.append((img_path, image.img.url))
-        print(to_replace)
         new_text = replace_links(text, to_replace)
-        print(new_text)
-        doc.html = new_text
+        doc.html = strip_to_body_content(new_text)
         doc.status = DocumentStatus.DONE
         doc.save()
     except:
@@ -69,3 +67,17 @@ def replace_extension(filename, newextension):
     extension = filename.split(".")[-1]
     newfilename = filename[:-len(extension)] + newextension
     return newfilename
+
+
+def strip_to_body_content(html):
+    # TODO(att): refactoring of regexes
+    r = re.compile("<body [^>]*>")
+    start_match = r.search(html)
+    if start_match:
+        html = html[start_match.end():]
+
+    r = re.compile("<\\body[^>]*>")
+    end_match = r.search(html)
+    if end_match:
+        html = html[:end_match.start()]
+    return html
