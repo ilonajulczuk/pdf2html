@@ -7,4 +7,4 @@ class AppConfig(AppConfig):
 
     def ready(self):
         # import signal handlers
-        import documents.signals
+        from . import signals

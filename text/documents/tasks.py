@@ -2,7 +2,7 @@ import os
 import re
 import subprocess
 
-from documents.models import Document, DocumentStatus, Image
+from .models import Document, DocumentStatus, Image
 from text.celery import app
 from django.conf import settings
 from django.core.files import File

@@ -1,11 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from django.contrib.auth.models import User
 from documents.models import Document
 from rest_framework import viewsets, permissions
-from documents.serializers import UserSerializer, DocumentSerializer
-from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from documents.serializers import DocumentSerializer
+from rest_framework.decorators import api_view, permission_classes
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
@@ -23,11 +22,8 @@ class DocumentViewSet(viewsets.ModelViewSet):
         user = self.request.user
         return Document.objects.filter(owner=user)
 
-
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    """
-    queryset = User.objects
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 @api_view()
