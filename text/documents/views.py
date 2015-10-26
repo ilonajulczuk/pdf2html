@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from documents.models import Document
+from documents.models import Document, DocumentStatus
 from rest_framework import viewsets, permissions
 from documents.serializers import DocumentSerializer
 from rest_framework.decorators import api_view, permission_classes
@@ -30,11 +30,15 @@ class DocumentViewSet(viewsets.ModelViewSet):
 @permission_classes([permissions.IsAuthenticated])
 def display(request, num):
     doc = Document.objects.get(pk=num)
+    context = {}
+    # TODO(att): add document title.
     if doc.html:
-        context = {"generated_html": doc.html}
-        return render(request, 'documents/display.html', context)
-    else:
-        return HttpResponse(status=404)
+        context["generated_html"] = doc.html
+        context["status"] = "ready"
+    if doc.status == DocumentStatus.ERROR:
+        context["status"] = "error"
+
+    return render(request, 'documents/display.html', context)
 
 
 def home(request):

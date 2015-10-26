@@ -1,20 +1,25 @@
 {% extends "documents/base.html" %}
 
+{% load staticfiles %}
 {% block content %}
-        {% if request.user.is_authenticated %}
-        <div class="recent-docs">
-            <h2>Recent docs</h2>
-            <ul>
-            {% for doc in docs %}
-            <li><a href="{% url 'display' doc.id %}">{{ doc.title }}</a> </li>
-            {% empty %}
-            You don't have any docs yet!
-            {% endfor %}
-            </ul>
-        </div>
-        {% else %}
-        {% endif %}
+    {% if request.user.is_authenticated %}
+    <div class="recent-docs">
+        <h2>Recent docs</h2>
+        <ul id="recent-docs">
+        {% for doc in docs %}
+        <li><a href="{% url 'display' doc.id %}">{{ doc.title }}</a> </li>
+        {% empty %}
+        You don't have any docs yet!
+        {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    {% endif %}
+    <form id="file-form" method="POST">
+        <input type="" id="doc-title" value="Title of the doc."/>
+        <input type="file" id="file-select" accept="application/pdf"/>
+        <button type="submit" id="upload-button">Upload</button>
+    </form>
 
-        <button><a href="{% url "document-list" %}">Upload</a></button>
-
+    <script src="{% static 'js/home.js' %}"></script>
 {% endblock content %}

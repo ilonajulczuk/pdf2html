@@ -1,5 +1,13 @@
 {% extends "documents/base.html" %}
 
 {% block content %}
+
+{% if status == "ready" %}
 {{ generated_html|safe }}
+{% elif status == "error" %}
+Error during processing.
+{% else %}
+Not ready yet.
+{% endif %}
+
 {% endblock content %}

@@ -11,8 +11,8 @@
     <div class="account">
         {% if request.user.is_authenticated %}
         Hi, '{{ request.user.username }}'!
-        <a href="{% url "rest_framework:logout" %}">Logout</a>
-        {% else %}<a href="{% url "rest_framework:login" %}">Login</a>{% endif %}
+        <a href="{% url 'rest_framework:logout' %}">Logout</a>
+        {% else %}<a href="{% url 'rest_framework:login' %}">Login</a>{% endif %}
     </div>
 </header>
 
