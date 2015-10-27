@@ -12,14 +12,17 @@
         You don't have any docs yet!
         {% endfor %}
         </ul>
+
+         <form id="file-form" method="POST">
+            <input type="" id="doc-title" value="Title of the doc."/>
+            <input type="file" id="file-select" accept="application/pdf"/>
+            <button type="submit" id="upload-button">Upload</button>
+        </form>
     </div>
     {% else %}
+        To use the service you need to <a href="{% url 'rest_framework:login' %}">login</a> or  <a href="{% url 'register' %}">register</a>.
     {% endif %}
-    <form id="file-form" method="POST">
-        <input type="" id="doc-title" value="Title of the doc."/>
-        <input type="file" id="file-select" accept="application/pdf"/>
-        <button type="submit" id="upload-button">Upload</button>
-    </form>
+
 
     <script src="{% static 'js/home.js' %}"></script>
 {% endblock content %}
