@@ -28,6 +28,7 @@ router.register(r'documents', views.DocumentViewSet)
 urlpatterns = [
     url(r'^$', views.home),
     url(r'^register/$', views.register, name="register"),
+    url(r'^login/$', views.loginview, name="login"),
     url(r'^api/', include(router.urls)),
     url(r'^display/(?P<num>[0-9]+)/$', views.display, name="display"),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),

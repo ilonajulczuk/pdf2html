@@ -7,6 +7,9 @@ var form = document.getElementById('file-form');
 var fileSelect = document.getElementById('file-select');
 var titleText = document.getElementById('doc-title')
 var uploadButton = document.getElementById('upload-button');
+var statusText = document.getElementById('status');
+var recentDocs = document.getElementById('recent-docs');
+
 
 form.onsubmit = function(event) {
     event.preventDefault();
@@ -15,10 +18,11 @@ form.onsubmit = function(event) {
     var files = fileSelect.files;
     // Create a new FormData object.
     if (files[0] == undefined) {
-        alert("Choose a file!")
+        statusText.innerHTML = "Choose a file!";
         return
     }
-    uploadButton.innerHTML = 'Uploading...';
+
+    statusText.innerHTML = 'Uploading...';
 
     var formData = new FormData();
     // Add the file to the request.
@@ -27,7 +31,7 @@ form.onsubmit = function(event) {
     formData.append('title', titleText.value);
 
     // Set up the request.
-    var xhr = new XMLHttpRequest();
+    xhr = new XMLHttpRequest();
     // Open the connection.
     xhr.open('POST', '/api/documents/', true);
     xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
@@ -36,9 +40,19 @@ form.onsubmit = function(event) {
     xhr.onload = function () {
         if (xhr.status === 201) {
             uploadButton.innerHTML = 'Upload';
-            alert("Succes!");
+            statusText.innerHTML = "Success! "
+            var newItem = document.createElement("LI");       // Create a <li> node
+
+            var id = JSON.parse(xhr.response).id
+            var link = document.createElement("A");
+            link.href = '/display/' + id + '/';
+            link.innerHTML = titleText.value;
+            newItem.appendChild(link);                    // Append the text to <li>
+            statusText.appendChild(link.cloneNode(true));
+            recentDocs.insertBefore(newItem, recentDocs.childNodes[0]);
+
         } else {
-            alert('An error occurred!');
+            statusText.innerHTML = 'An error occurred!';
         }
     };
     // Send the Data.
