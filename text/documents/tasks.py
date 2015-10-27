@@ -26,7 +26,6 @@ def convert_to_html(document_pk):
             fw.write(doc.file.file.read())
         doc.file.close()
 
-        # TODO(att): if it fails, mark document appropriately
         basefilename = os.path.basename(filename)
         subprocess.check_call(["pdftohtml", "-noframes", basefilename], cwd=directory)
 
@@ -34,20 +33,35 @@ def convert_to_html(document_pk):
         with open(htmlfilename) as f:
             text = f.read()
 
-        r = re.compile('src="({id}-[^"]*)"'.format(id=document_pk))
-        img_paths = r.findall(text)
+        def process_and_replace(text, regex, process):
+            r = re.compile(regex)
 
-        to_replace = []
+            paths = r.findall(text)
+            to_replace = []
 
-        for img_path in img_paths:
+            for path in paths:
+                to_replace.append((path, process(path)))
+
+            return replace_links(text, to_replace)
+
+        img_link_regex = 'src="({id}-[^"]*)"'.format(id=document_pk)
+
+        def process_image(path):
             # Create a Image based on path.
             image = Image(document=doc)
-            with open(directory + "/" + img_path, "rb") as f:
-                image.img.save(img_path, File(f))
-            # Change link in the original html.
-            to_replace.append((img_path, image.img.url))
-        new_text = replace_links(text, to_replace)
-        doc.html = strip_to_body_content(new_text)
+            with open(directory + "/" + path, "rb") as f:
+                image.img.save(path, File(f))
+            return image.img.url
+
+        internal_link_regex = 'href="({htmlfilename}#\d*)"'.format(htmlfilename=os.path.basename(htmlfilename))
+
+        def process_link(path):
+            return "#{}".format(path.split("#")[-1])
+
+        text = process_and_replace(text, img_link_regex, process_image)
+        text = process_and_replace(text, internal_link_regex, process_link)
+
+        doc.html = strip_to_body_content(text)
         doc.status = DocumentStatus.DONE
         doc.save()
     except:
