@@ -39,11 +39,6 @@ I want to minimize dependencies as much as possible.
 I know python and I know django. I can use celery for background processing,
 even though it's a little bit of overkill.
 
-Should I have another a simpler task queue? For example on db? (sqlite!) Maybe?
-
-http://flask.pocoo.org/snippets/88/
-http://flask.pocoo.org/snippets/73/
-
 This should be straightforward enough.
 
 

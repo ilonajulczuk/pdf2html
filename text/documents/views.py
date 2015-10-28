@@ -1,3 +1,4 @@
+import logging
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
@@ -8,6 +9,8 @@ from rest_framework.decorators import api_view, permission_classes
 
 from documents.models import Document, DocumentStatus
 from documents.serializers import DocumentSerializer
+
+logger = logging.getLogger(__name__)
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
@@ -26,6 +29,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
         return Document.objects.filter(owner=user)
 
     def perform_create(self, serializer):
+        logger.info("Saving with user: %s", self.request.user)
         serializer.save(owner=self.request.user)
 
 

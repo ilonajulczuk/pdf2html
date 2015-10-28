@@ -1,0 +1,35 @@
+---
+- name: Ensure dependencies.
+  apt:
+    pkg={{ item }}
+    state=latest
+  with_items:
+     - python3-dev
+     - python3-pip
+     - python-virtualenv
+
+- name: Install nginx.
+  apt:
+    name=nginx
+    state=latest
+
+- name: Configure Nginx
+  template:
+    src=nginx.conf.j2
+    dest=/etc/nginx/nginx.conf
+
+- name: Enable nginx on boot
+  service:
+    name=nginx
+    enabled=yes
+
+- name: Create venv directory
+  command: mkdir /home/venvs/ creates="/home/venvs/"
+
+- name: Manually create the initial virtualenv
+  command: virtualenv /home/venvs/myenv -p python3.4 creates="/home/venvs/myenv"
+
+- name: Install requirements
+  pip:
+    requirements=/my_app/requirements.txt
+    virtualenv=/user/home/venvs/myenv
