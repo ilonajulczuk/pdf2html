@@ -1,9 +1,9 @@
 ---
 
-git_repo: https://github.com/jcalazan/youtube-audio-dl.git
+git_repo: https://github.com/ilonajulczuk/pdf2html.git
 
 project_name: pdftotext
-application_name: pdftotext
+application_name: text
 
 ssl_dest_dir: /etc/ssl
 

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+DJANGODIR={{ project_path }}
+
+# Activate the virtual environment.
+cd $DJANGODIR
+. {{ virtualenv_path }}/bin/activate
+. {{ virtualenv_path }}/bin/postactivate
+
+cd {{ application_name }}
+
+# Programs meant to be run under supervisor should not daemonize themselves
+# (do not use --daemon).
+exec celery -A {{ application_name }}.celery worker -l info --concurrency={{ celery_num_workers }}

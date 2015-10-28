@@ -1,0 +1,5 @@
+[all:vars]
+env=development
+
+[prod]
+128.199.43.110 ansible_ssh_user=root

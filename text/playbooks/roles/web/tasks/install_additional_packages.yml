@@ -1,0 +1,16 @@
+---
+
+- name: Ensure dependencies.
+  apt:
+    pkg={{ item }}
+    state=latest
+  with_items:
+     - git
+     - tmux
+     - libjpeg-dev
+     - python3-dev
+     - python3-pip
+     - poppler-utils
+     - libghc-zlib-bindings-dev
+     - python-virtualenv
+     - htop
