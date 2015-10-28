@@ -30,7 +30,7 @@ def convert_to_html(document_pk):
         subprocess.check_call(["pdftohtml", "-noframes", basefilename], cwd=directory)
 
         htmlfilename = replace_extension(filename, "html")
-        with open(htmlfilename) as f:
+        with open(htmlfilename, encoding="utf-8") as f:
             text = f.read()
 
         def process_and_replace(text, regex, process):
