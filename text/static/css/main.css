@@ -48,3 +48,61 @@ a {
     float: left;
     padding: 10px;
 }
+
+button, input, select, textarea {
+    font-family : inherit;
+    font-size   : 100%;
+}
+
+input, textarea, select, button {
+    width : 250px;
+    display: block;
+    margin:  0 0 10px 0;
+    border-radius: 2px;
+    border: 1px solid #999;
+
+    -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
+    -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
+    box-sizing: border-box;
+}
+
+form {
+    width: 250px;
+}
+
+button[type=submit], input[type=submit] {
+    float: right;
+    width: auto;
+    background-color: #44d245;
+    padding: 0.5em;
+    color: #fdfdfd;
+    cursor: pointer;
+    margin: 0 0 10px 0;
+}
+
+
+input {
+    padding: 0.5em;
+}
+
+input[type=file] {
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+label, .helptext {
+    font-family : inherit;
+    font-size   : 90%;
+}
+
+::-webkit-file-upload-button {
+    border-radius: 2px;
+    border: 1px solid #999;
+    padding: 0.5em;
+}
+
+::-ms-browse {
+    color: red;
+    padding: 1em;
+}
