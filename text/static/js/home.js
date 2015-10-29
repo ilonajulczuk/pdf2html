@@ -35,6 +35,7 @@ form.onsubmit = function(event) {
     // Open the connection.
     xhr.open('POST', '/api/documents/', true);
     xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    xhr.setRequestHeader('Accept', 'application/json')
 
     // Set up a handler for when the request finishes.
     xhr.onload = function () {
