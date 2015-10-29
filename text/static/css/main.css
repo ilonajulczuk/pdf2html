@@ -21,17 +21,16 @@
 
 header {
     font-size: 18px;
-    background-color: #E57E94;
-    border-bottom: 1px solid;
-    padding-bottom: 10px;
+    background-color: #fcfcff;
+    border-bottom: 1px solid #999999;
+    padding-bottom: 0px;
     padding-top: 20px;
     margin: 0 0 30px 0;
     height: 70px;
-    color: whitesmoke;
 }
 
 a {
-    color: rgb(148, 69, 69);;
+    color: rgb(198, 19, 29);;
     text-decoration: none;
     font-weight: 900;
 }
@@ -103,6 +102,11 @@ label, .helptext {
 }
 
 ::-ms-browse {
-    color: red;
-    padding: 1em;
+    border-radius: 2px;
+    border: 1px solid #999;
+    padding: 0.5em;
+}
+
+body {
+    font-family: "Roboto",sans-serif
 }
