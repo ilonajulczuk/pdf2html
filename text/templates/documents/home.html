@@ -7,7 +7,7 @@
         <h2>Recent docs</h2>
         <ul id="recent-docs">
         {% for doc in docs %}
-        <li><a href="{% url 'display' doc.id %}">{{ doc.title }}</a></li>
+        <li><a href="{% url 'display' doc.pseudoid %}">{{ doc.title }} {{ doc.pseudoid }}</a></li>
         {% empty %}
         You don't have any docs yet!
         {% endfor %}

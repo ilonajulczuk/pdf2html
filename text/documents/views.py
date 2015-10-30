@@ -34,9 +34,8 @@ class DocumentViewSet(viewsets.ModelViewSet):
 
 
 @api_view()
-@permission_classes([permissions.IsAuthenticated])
 def display(request, num):
-    doc = Document.objects.get(pk=num)
+    doc = Document.objects.get(pseudoid=num)
     context = {}
     # TODO(att): add document title.
     if doc.html:

@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^register/$', views.register, name="register"),
     url(r'^login/$', views.loginview, name="login"),
     url(r'^api/', include(router.urls)),
-    url(r'^display/(?P<num>[0-9]+)/$', views.display, name="display"),
+    url(r'^display/(?P<num>[a-zA-Z0-9]*)/$', views.display, name="display"),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', include(admin.site.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
