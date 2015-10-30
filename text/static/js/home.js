@@ -44,10 +44,10 @@ form.onsubmit = function(event) {
             statusText.innerHTML = "Success! "
             var newItem = document.createElement("LI");       // Create a <li> node
 
-            var id = JSON.parse(xhr.response).id
+            var id = JSON.parse(xhr.response).pseudoid
             var link = document.createElement("A");
             link.href = '/display/' + id + '/';
-            link.innerHTML = titleText.value;
+            link.innerHTML = titleText.value + ' ' + id;
             newItem.appendChild(link);                    // Append the text to <li>
             statusText.appendChild(link.cloneNode(true));
             recentDocs.insertBefore(newItem, recentDocs.childNodes[0]);
